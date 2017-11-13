@@ -269,10 +269,58 @@ ADB的臆测，我还是要说你是“一本正经地胡说八道”。
 　　adb shell logcat，以及adb logcat 均是提供查看设备的日志功能，用法也一样，只不过一个是直接通过shell来调用，一个是直接通过adb 接口来访问。关于logcat的使用细节，请参考“万境绝尘”在CSDN上的博客[《adb logcat 命令行用法》 http://www.hanshuliang.com/?post=32](http://www.hanshuliang.com/?post=32)  
 　　如遇原文无法正常访问的问题，请参考本地手缓存的副本[《adb logcat 命令行用法 —— 由“三寸丁”Ctrl+C自“万境绝尘”的博客》](adb_logcat_命令行用法——由三寸丁复制粘贴.md)
 #### 3.8.3 getevent  
-
+　　在开发手机等相关Android产品时，通常getevent命令及下面的input我们都不太用得到。但对于开发电视或是基于PC开发Android-X86而言，这几乎是两个必备的技能。个中原因，且听我道来！  
+　　对于电视而言，随时可以老板说，我们新发现了一个遥控器供应商，产品又便宜，手感又好。那么我恭喜你，测试“攻城狮”！你需要将新的遥控器的每一个按键的码测试下来提供给研发的“程序猿”。  
+　　你可能地觉得奇怪，就算是电视需要查码，可是又关Android-X86什么事，这个不是用来设计在PC上运行的吗？又不需要使用遥控器？！说实话，一开始我也是这么想的。但总有些厂商的个别设计人员不按套路出牌，除了26字母及数字以外，很多诸如多媒体键、亮度音量控制键，总是设计得那么与众不同，即使在Windows上运行也需要加载自家的驱动才能正常工作。更有甚者连电源按键出来的码都很特别，你甚至都不用Android-X86都能看出它是多么的白里透红。  
+　　举个栗子，某想的思考板T420，Ubuntu的系统被设计为按一下电源按键，会弹出如下的提示：  
+        <div><center>![](images/Ubuntu_Power_Pressed.PNG)</center>  
+　　可想而知，如果BOSS让你搞定这个按键，而你又没有get到getevent技能，会是多么的糟心。  
+　　而有了getevent这个强力工具，一切变得非常简单，开启getevent命令，按下电源键，坐等终端里报出相关按键的evdev信息。如下图所示：    
+        <div><center>![](images/adb_shell_getevent.PNG)</center>  
+　　有了这一波神操作，立马键码原形显露无疑。上图是以Android模拟器为例按下电源键后得到的event设备上的按键码信息，键码为0074。  
+　　不过需要注意的是，getevent操作最好在交互式adb shell中使用，直接执行是，由于某些神密因素的影响，多多少少会有些问题！另外当需要结束event信息的获取，需要按下Ctrl+C组合键。
 #### 3.8.4 input  
+
+
+$ adb push D:\Android\Projects\android-testing-master\ui\uiautomator\BasicSample\app\build\outputs\apk\debug\app-debug.apk /data/local/tmp/com.example.android.testing.uiautomator.BasicSample
+$ adb shell pm install -t -r "/data/local/tmp/com.example.android.testing.uiautomator.BasicSample"
+Success
+
+
+$ adb push D:\Android\Projects\android-testing-master\ui\uiautomator\BasicSample\app\build\outputs\apk\androidTest\debug\app-debug-androidTest.apk /data/local/tmp/com.example.android.testing.uiautomator.BasicSample.test
+$ adb shell pm install -t -r "/data/local/tmp/com.example.android.testing.uiautomator.BasicSample.test"
+Success
+
+
+Running tests
+
+$ adb shell am instrument -w -r   -e debug false -e class com.example.android.testing.uiautomator.BasicSample.ChangeTextBehaviorTest com.example.android.testing.uiautomator.BasicSample.test/android.support.test.runner.AndroidJUnitRunner
+Client not ready yet..
+Started running tests
+Tests ran to completion.
+
+
+
+Testing started at 9:32 ...
+
+11/13 09:32:00: Launching testChangeText_sam...()
+No apk changes detected since last installation, skipping installation of D:\Android\Projects\android-testing-master\ui\uiautomator\BasicSample\app\build\outputs\apk\debug\app-debug.apk
+$ adb shell am force-stop com.example.android.testing.uiautomator.BasicSample
+No apk changes detected since last installation, skipping installation of D:\Android\Projects\android-testing-master\ui\uiautomator\BasicSample\app\build\outputs\apk\androidTest\debug\app-debug-androidTest.apk
+$ adb shell am force-stop com.example.android.testing.uiautomator.BasicSample.test
+Running tests
+
+$ adb shell am instrument -w -r   -e debug false -e class com.example.android.testing.uiautomator.BasicSample.ChangeTextBehaviorTest#testChangeText_sameActivity com.example.android.testing.uiautomator.BasicSample.test/android.support.test.runner.AndroidJUnitRunner
+Client not ready yet..
+Started running tests
+Tests ran to completion.
+
+
 #### 3.8.5 pm
 #### 3.8.6 am
 
 ### 3.9 adb backup  
 ### 4.0 adb restore  
+### 4.1 adb get-state  
+### 4.2 adb wait-for-[ROUTE]-STATE  
+### 4.3 adb reboot
