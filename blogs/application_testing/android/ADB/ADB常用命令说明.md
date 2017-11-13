@@ -6,7 +6,8 @@
 模拟或真机环境的APK测试，基本上所有的工作都是在Android Studio这个大IDE下完成。
 　　因此，也就有很多新开发工程师都不知道ADB是什么。
 ```
-                      ADB是啥，是“俺的吧”，是“爱豆瓣”，อิ_อิ```
+                      ADB是啥，是“俺的吧”，是“爱豆瓣”，อิ_อิ
+```
 　　作为一个"一本正经"的“攻城狮”，好吧，我承认我被你Get到了。但在Android的世界里，你对
 ADB的臆测，我还是要说你是“一本正经地胡说八道”。
 
@@ -101,7 +102,7 @@ ADB的臆测，我还是要说你是“一本正经地胡说八道”。
     * scripting:
         wait-for[-TRANSPORT]-STATE
                               等待设备进入指定状态：device、recovery、sideload，或
-                              是bootloader。TRANSPORT可以是：usb、local、any[*]
+                              是bootloader。TRANSPORT可以是：usb、local、any
         get-state             将显示为offline、bootloader或是device中的一种
         get-serialno          取得设备序列号
         get-devpath           取得设备的device-path
