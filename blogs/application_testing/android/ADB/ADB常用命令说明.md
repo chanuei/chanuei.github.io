@@ -253,7 +253,7 @@ ADB的臆测，我还是要说你是“一本正经地胡说八道”。
 　　直接执行，即不打开交互式终端，由adb shell指令后面跟上要执行的指令及其参数组成。格式为“adb shell [COMMAND] [PARAMETER]”，如下图所示:  
         <div><center>![](images/adb_shell_noninteractive.png)</center>  
 　　值得注意的是，参数中需要转义的字符在交互式shell中只需要一次转义，而在直接执行过程中需要两次转义才行。  
-　　下面讲述一些调试过程中比较有用的shell命令。  
+　　下面讲述一些与Android调试及测试密切相关的shell命令，其他的泛泛的linux命令，不在本文档的论述范围之内。  
 #### 3.8.1 dumpsys  
 　　Android是一个比较庞大的系统，这个系统里运行了很多的服务，在调试过程中我们经常会需要查看一下相关服务的信息。dumpsys就是用来转储这些信息的一个非常好用的工作。  
 　　要知道设备上当前有哪些服务是可以进行dumpsys的,可以以“-l”选项,不加参数的方式运行dumpsys命令：  
@@ -264,5 +264,15 @@ ADB的臆测，我还是要说你是“一本正经地胡说八道”。
         <table><tr><td bgcolor=black><font color=white>　　> adb shell dumpsys battery　　　　　　</td></tr></table>
 　　其输出信息如下：  
       　 <div><center>![](images/dumpsys_battery.png)</center>  
+　　关于dumpsys其他服务的细节内容，就不在本文里一一讲述。  
+#### 3.8.2 logcat  
+　　adb shell logcat，以及adb logcat 均是提供查看设备的日志功能，用法也一样，只不过一个是直接通过shell来调用，一个是直接通过adb 接口来访问。关于logcat的使用细节，请参考“万境绝尘”在CSDN上的博客[《adb logcat 命令行用法》 http://www.hanshuliang.com/?post=32](http://www.hanshuliang.com/?post=32)  
+　　如遇原文无法正常访问的问题，请参考本地手缓存的副本[《adb logcat 命令行用法 —— 由“三寸丁”Ctrl+C自“万境绝尘”的博客》](adb_logcat_命令行用法——由三寸丁复制粘贴.md)
+#### 3.8.3 getevent  
 
-##### dumpsys_
+#### 3.8.4 input  
+#### 3.8.5 pm
+#### 3.8.6 am
+
+### 3.9 adb backup  
+### 4.0 adb restore  
